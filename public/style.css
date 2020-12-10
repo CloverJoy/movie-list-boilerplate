@@ -1,0 +1,18 @@
+body {
+  background-color: cyan;
+}
+#app {
+  width: 30%;
+  margin: left;
+  text-align: left;
+}
+
+.movie-list {
+  border: 2px solid black;
+  margin-bottom: 10px;
+}
+
+#title {
+  border-bottom: 3px solid black;
+
+}
