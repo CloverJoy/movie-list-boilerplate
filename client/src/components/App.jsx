@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar.jsx';
 import MovieList from './MovieList.jsx';
+import AddMovie from './AddMovie.jsx';
 
 let movies = [
   {title: 'Mean Girls'},
@@ -14,10 +15,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies
+      movies,
     }
     this.sortMovie = this.sortMovie.bind(this);
-    this.resetMovies = this.resetMovies.bind(this);
+    this.refreshMovies = this.refreshMovies.bind(this);
+    this.addMovie = this.addMovie.bind(this);
 
   }
 
@@ -34,15 +36,22 @@ class App extends React.Component {
    }
   }
 
-  resetMovies() {
+  refreshMovies() {
+    this.setState({movies});
+  }
+
+  addMovie(addedMovie) {
+    const movies = [...this.state.movies];
+    movies.push(addedMovie);
     this.setState({movies});
   }
 
   render() {
     return (
       <div>
-      <SearchBar sortMovie={this.sortMovie} resetMovies={this.resetMovies} />
-      <MovieList movies={this.state.movies}/>
+        <AddMovie addMovie={this.addMovie}/>
+        <SearchBar sortMovie={this.sortMovie} refreshMovies={this.refreshMovies} />
+        <MovieList movies={this.state.movies}/>
       </div>
     )
   }

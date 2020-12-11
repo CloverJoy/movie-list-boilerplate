@@ -24,7 +24,12 @@ body {
   margin-left: 20px;
   cursor: pointer;
 }
+
 .reset-button:hover {
   color: green;
+}
+
+.add-movie {
+  margin-bottom: 30px;
 }
 

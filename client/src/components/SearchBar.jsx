@@ -20,11 +20,12 @@ class SearchBar extends React.Component {
   handleSubmit(event) {
     this.props.sortMovie(this.state.query);
     event.preventDefault();
+    this.setState({query: ''});
 
   }
 
   handleResetButton() {
-    this.props.resetMovies();
+    this.props.refreshMovies();
   }
 
   render() {
@@ -32,8 +33,8 @@ class SearchBar extends React.Component {
       <div>
       <form className="search" onSubmit={this.handleSubmit}>
         <input type="text" value={this.state.query} onChange={this.handleChange}></input>
-        <button>Submit</button>
-        <label className="reset-button" onClick={this.handleResetButton}>Reset</label>
+        <button>Searcht</button>
+        <label className="reset-button" onClick={this.handleResetButton}>Refresh</label>
       </form>
       </div>
     );
