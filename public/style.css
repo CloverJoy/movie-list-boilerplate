@@ -14,5 +14,17 @@ body {
 
 #title {
   border-bottom: 3px solid black;
-
 }
+
+.search {
+  margin-bottom: 30px;
+}
+
+.reset-button {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.reset-button:hover {
+  color: green;
+}
+

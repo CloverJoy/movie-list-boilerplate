@@ -7,13 +7,35 @@ class SearchBar extends React.Component {
       query: ''
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleResetButton = this.handleResetButton.bind(this);
+
   }
+
+  handleChange(event) {
+    this.setState({query: event.target.value});
+  }
+
+  handleSubmit(event) {
+    this.props.sortMovie(this.state.query);
+    event.preventDefault();
+
+  }
+
+  handleResetButton() {
+    this.props.resetMovies();
+  }
+
   render() {
     return (
-      <form>
-        <input type="text" value=""></input>
+      <div>
+      <form className="search" onSubmit={this.handleSubmit}>
+        <input type="text" value={this.state.query} onChange={this.handleChange}></input>
         <button>Submit</button>
+        <label className="reset-button" onClick={this.handleResetButton}>Reset</label>
       </form>
+      </div>
     );
   };
 };
