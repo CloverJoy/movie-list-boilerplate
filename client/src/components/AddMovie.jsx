@@ -11,7 +11,6 @@ class AddMovie extends React.Component {
   }
 
   handleOnChange(event) {
-    console.log('active');
     this.setState({movie: {'title': event.target.value}})
   }
 
