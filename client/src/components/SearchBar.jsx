@@ -30,13 +30,13 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <span>
       <form className="search" onSubmit={this.handleSubmit}>
         <input type="text" value={this.state.query} onChange={this.handleChange}></input>
         <button className='search-button'>Search</button>
         <label className="reset-button" onClick={this.handleResetButton}>Refresh</label>
       </form>
-      </div>
+      </span>
     );
   };
 };

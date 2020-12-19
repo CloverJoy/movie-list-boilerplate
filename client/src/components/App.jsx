@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar.jsx';
 import MovieList from './MovieList.jsx';
 import AddMovie from './AddMovie.jsx';
+import ToggleWatched from './ToggleWatched.jsx';
 
 let movies = [
   {title: 'Mean Girls'},
@@ -51,6 +52,7 @@ class App extends React.Component {
       <div>
         <AddMovie addMovie={this.addMovie}/>
         <SearchBar sortMovie={this.sortMovie} refreshMovies={this.refreshMovies} />
+        <ToggleWatched />
         <MovieList movies={this.state.movies}/>
       </div>
     )
