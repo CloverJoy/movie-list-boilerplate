@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const PORT = 3000 || process.env.PORT;
+const {addMovie, retrieveMovies} =  require('../database/index.js');
+const connection = require('../database/connectmysql.js');
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -17,7 +19,14 @@ app.get('/api/movies', (req,res) => {
     {title: 'Sunshineeee'},
     {title: 'Ex Makimak'},
   ];
-  res.send(movies);
+  console.log(movies[0]);
+  addMovie((result) => {
+    retrieveMovies((dbresult) => {
+      console.log(result);
+      console.log(dbresult);
+      res.send(movies);
+    })
+  });
 })
 
 app.listen(PORT, () => {
