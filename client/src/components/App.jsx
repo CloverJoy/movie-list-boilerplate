@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar.jsx';
 import MovieList from './MovieList.jsx';
 import AddMovie from './AddMovie.jsx';
+import Axios from 'axios';
 
 let movies = [
   {title: 'Mean Girls'},
@@ -34,7 +35,17 @@ class App extends React.Component {
     this.handleWatchedToNot = this.handleWatchedToNot.bind(this);
     this.handleNotWatchedButton = this.handleNotWatchedButton.bind(this);
     this.handleWatchedButton = this.handleWatchedButton.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   };
+
+  fetchData() {
+    Axios.get('/api/movies')
+      .then((res) => {
+        console.log(res.data);
+        this.setState({movies: res.data});
+      })
+      .catch(() => console.log('Cannot fetch the data'))
+  }
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
@@ -109,6 +120,7 @@ class App extends React.Component {
     event.preventDefault();
   }
   componentDidMount() {
+    this.fetchData();
     console.log('success!');
   }
 
