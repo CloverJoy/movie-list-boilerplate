@@ -15,16 +15,25 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {movies,
+    this.state = {
+      movies,
       title: '',
       addtitle:'',
       filteredmovies:[],
-      isSearch: true
+      isSearch: true,
+      firstTime: true,
+      watchedmovies:'',
+      toggleWatchedButton: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleToggleSearch = this.handleToggleSearch.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleAddFirstTime = this.handleAddFirstTime.bind(this);
+    this.handleNotToWatched = this.handleNotToWatched.bind(this);
+    this.handleWatchedToNot = this.handleWatchedToNot.bind(this);
+    this.handleNotWatchedButton = this.handleNotWatchedButton.bind(this);
+    this.handleWatchedButton = this.handleWatchedButton.bind(this);
   };
 
   handleChange(event) {
@@ -36,6 +45,34 @@ class App extends React.Component {
       isSearch: !state.isSearch
     }));
   }
+
+  handleWatchedButton() {
+    this.setState({toggleWatchedButton: true});
+    console.log(this.state.toggleWatchedButton);
+  };
+
+  handleNotWatchedButton() {
+    this.setState({toggleWatchedButton: false});
+    console.log(this.state.toggleWatchedButton);
+  }
+
+  handleNotToWatched(idx) {
+    let movies = [...this.state.movies];
+    let watchedmovies = [...this.state.watchedmovies];
+    watchedmovies.push(movies.splice(1,1)[0]);
+    this.setState({movies: movies });
+    this.setState({watchedmovies: watchedmovies});
+    console.log(this.state.watchedmovies);
+  }
+
+  handleWatchedToNot(idx) {
+    let watchedmovies = [...this.state.watchedmovies];
+    let movies = [...this.state.movies];
+    movies = [...movies, watchedmovies.splice(idx,1)[0]];
+    this.setState({watchedmovies: watchedmovies});
+    this.setState({movies: movies});
+  }
+
 
   handleSearch(event) {
     let query = this.state.title;
@@ -55,23 +92,34 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  handleAddFirstTime(event) {
+    let movies = [];
+    let query = this.state.addtitle;
+    movies = [...movies, {title: query}];
+    this.setState({movies: movies});
+    this.setState({firstTime: false});
+    event.preventDefault();
+  }
+
   handleAdd(event) {
     let movies = [...this.state.movies];
     let query = this.state.addtitle;
-    console.log(query)
     movies = [...movies, {title: query}];
-    console.log(movies);
     this.setState({movies: movies});
     event.preventDefault();
+  }
+  componentDidMount() {
+    console.log('success!');
   }
 
   render() {
     let movies = this.state.movies;
     return (
       <div>
-        <AddMovie handleAdd={this.handleAdd} handleChange={this.handleChange} addtitle = {this.state.addtitle}/>
+        <AddMovie handleAddFirstTime = {this.handleAddFirstTime} handleAdd={this.state.firstTime ? this.handleAddFirstTime : this.handleAdd} handleChange={this.handleChange} addtitle = {this.state.addtitle} />
         <SearchBar handleSearch = {this.handleSearch} handleChange = {this.handleChange} title = {this.state.title}/>
-        <MovieList movies = {this.state.movies} isSearch = {this.state.isSearch} filteredmovies = {this.state.filteredmovies} handleToggleSearch = {this.handleToggleSearch}/>
+        <button onClick={this.handleNotWatchedButton}>NOT WATCHED</button><button onClick={this.handleWatchedButton}>WATCHED</button>
+        <MovieList isWatched = {this.state.toggleWatchedButton} handleWatchedToNot = {this.handleWatchedToNot}handleNotToWatched = {this.handleNotToWatched} movies = {this.state.movies} isSearch = {this.state.isSearch} filteredmovies = {this.state.filteredmovies} watchedmovies = {this.state.watchedmovies} handleToggleSearch = {this.handleToggleSearch}/>
       </div>
     )
   }
